@@ -10,6 +10,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <p>
+          v.1.0 discord - mc - integrator
+        </p>
         <a
           className="App-link"
           href="https://reactjs.org"
