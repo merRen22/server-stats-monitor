@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:server_sync/model/user.dart';
 
 import 'package:server_sync/styles.dart';
 import 'package:server_sync/widgets.dart';
@@ -32,84 +34,89 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  final tween = MultiTrackTween([
-    Track("color1").add(Duration(seconds: 3),
-        ColorTween(begin: Color(0xffD38312), end: Colors.lightBlue.shade900)),
-    Track("color2").add(Duration(seconds: 3),
-        ColorTween(begin: Color(0xffA83279), end: Colors.blue.shade600))
-  ]);
-
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Theme(
-            data: ThemeData(primarySwatch: kAccentColorLight).copyWith(
-              buttonTheme: ButtonTheme.of(context).copyWith(
-                buttonColor: kAccentColorLight,
-                textTheme: ButtonTextTheme.primary,
-              ),
+  Widget build(BuildContext context) {
+    var userProvider = Provider.of<CurrentUser>(context);
+
+    final tween = MultiTrackTween([
+      Track("color1").add(Duration(seconds: 3),
+          ColorTween(begin: Color(0xffD38312), end: Colors.lightBlue.shade900)),
+      Track("color2").add(Duration(seconds: 3),
+          ColorTween(begin: Color(0xffA83279), end: Colors.blue.shade600))
+    ]);
+
+    return Scaffold(
+      body: Theme(
+          data: ThemeData(primarySwatch: kAccentColorLight).copyWith(
+            buttonTheme: ButtonTheme.of(context).copyWith(
+              buttonColor: kAccentColorLight,
+              textTheme: ButtonTextTheme.primary,
             ),
-            child: Stack(
-              children: <Widget>[
-                Positioned.fill(
-                    child: ControlledAnimation(
-                        playback: Playback.MIRROR,
-                        tween: tween,
-                        duration: tween.duration,
-                        builder: (context, animation) {
-                          return Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                  animation["color1"],
-                                  animation["color2"]
-                                ])),
-                            child: SingleChildScrollView(
-                              child: Form(
-                                key: _loginForm,
-                                child: Column(
-                                  children: <Widget>[
-                                    Image.asset(
-                                        'assets/images/discord-logo-white.png'),
-                                    const SizedBox(height: 32),
-                                    const Text(
-                                      'MC - Sync',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeights.medium,
-                                      ),
+          ),
+          child: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                  child: ControlledAnimation(
+                      playback: Playback.MIRROR,
+                      tween: tween,
+                      duration: tween.duration,
+                      builder: (context, animation) {
+                        return Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                animation["color1"],
+                                animation["color2"]
+                              ])),
+                          child: SingleChildScrollView(
+                            child: Form(
+                              key: _loginForm,
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                      'assets/images/discord-logo-white.png'),
+                                  const SizedBox(height: 32),
+                                  const Text(
+                                    'MC - Sync',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeights.medium,
                                     ),
-                                    const SizedBox(height: 32),
-                                    if (!_useEmailSignIn)
-                                      ..._buildGoogleSignInFields(),
-                                    if (_errorMessage != null)
-                                      _buildLoginMessage(),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(height: 32),
+                                  if (!_useEmailSignIn)
+                                    ..._buildGoogleSignInFields(),
+                                  if (_errorMessage != null)
+                                    _buildLoginMessage(),
+                                ],
                               ),
                             ),
-                          );
-                        })),
-                onBottom(AnimatedWave(
-                  height: 180,
-                  speed: 1.0,
-                )),
-                onBottom(AnimatedWave(
-                  height: 120,
-                  speed: 0.9,
-                  offset: pi,
-                )),
-                onBottom(AnimatedWave(
-                  height: 220,
-                  speed: 1.2,
-                  offset: pi / 2,
-                )),
-              ],
-            )),
-        floatingActionButton: LightManager(),
-      );
+                          ),
+                        );
+                      })),
+              onBottom(AnimatedWave(
+                height: 180,
+                speed: 1.0,
+              )),
+              onBottom(AnimatedWave(
+                height: 120,
+                speed: 0.9,
+                offset: pi,
+              )),
+              onBottom(AnimatedWave(
+                height: 220,
+                speed: 1.2,
+                offset: pi / 2,
+              )),
+            ],
+          )),
+      floatingActionButton: LightManager(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
 
   List<Widget> _buildGoogleSignInFields() => [
         RaisedButton(

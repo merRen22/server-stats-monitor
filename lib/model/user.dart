@@ -2,14 +2,17 @@ import 'package:flutter/foundation.dart';
 
 /// A wrapper of [FirebaseUser] provides infomation to distinguish the initial value.
 @immutable
-class CurrentUser {
-  final bool isInitialValue;
-  //final FirebaseUser data;
-  final String data;
+class CurrentUser extends ChangeNotifier {
+  bool _isSunny = true;
 
-  const CurrentUser._(this.data, this.isInitialValue);
-  //factory CurrentUser.create(FirebaseUser data) => CurrentUser._(data, false);
+  CurrentUser() {
+    _isSunny = true;
+  }
 
-  /// The inital empty instance.
-  static const initial = CurrentUser._(null, true);
+  bool get sunny => _isSunny;
+
+  void toggleSunny() {
+    _isSunny = !_isSunny;
+    notifyListeners();
+  }
 }
