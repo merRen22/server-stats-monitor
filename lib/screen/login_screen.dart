@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:server_sync/model/user.dart';
 
 import 'package:server_sync/styles.dart';
+import 'package:server_sync/screens.dart';
 import 'package:server_sync/widgets.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<CurrentUser>(context);
+    //var userProvider = Provider.of<CurrentUser>(context);
 
     final tween = MultiTrackTween([
       Track("color1").add(Duration(seconds: 3),
@@ -113,7 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
               )),
             ],
           )),
-      floatingActionButton: LightManager(),
+      floatingActionButton: Row(children: [
+        FlatButton(
+            onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AboutScreen()),
+                ),
+            child: Text("about")),
+        LightManager()
+      ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
