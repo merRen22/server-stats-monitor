@@ -24,7 +24,7 @@ class _LightManagerState extends State<LightManager>
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 200),
       vsync: this,
     );
   }
@@ -69,7 +69,7 @@ class _LightManagerState extends State<LightManager>
         Positioned(
             right: 0,
             child: Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     border: Border.all(width: 3, color: Colors.white),
                     color: Color(0xFF23272A),
@@ -81,7 +81,7 @@ class _LightManagerState extends State<LightManager>
 
   Widget animatedLabel(themeValues) {
     final animation =
-        Tween(begin: Offset(60, 0), end: Offset(0, 0)).animate(controller);
+        Tween(begin: Offset(40, 0), end: Offset(0, 0)).animate(controller);
 
     return AnimatedBuilder(
         animation: animation,
@@ -91,11 +91,9 @@ class _LightManagerState extends State<LightManager>
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
-                  bottomLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0))),
-          padding: const EdgeInsets.fromLTRB(8, 5, 48, 5),
-          margin: const EdgeInsets.fromLTRB(8, 10, 0, 10),
+                  bottomLeft: Radius.circular(20.0))),
+          padding: const EdgeInsets.fromLTRB(8, 7, 8, 7),
+          margin: const EdgeInsets.fromLTRB(8, 10, 45, 10),
           child: Text(themeValues.label),
         ),
         builder: (animatorContext, child) {
