@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final darkTheme = ThemeData(
     primarySwatch: Colors.grey,
     primaryColor: Colors.black,
     brightness: Brightness.dark,
     backgroundColor: const Color(0xFF23272A),
-    buttonColor: const Color(0xFF99AAB5),
+    buttonColor: const Color(0xFF7289DA),
     accentColor: Colors.white,
     accentIconTheme: IconThemeData(color: Colors.black),
     dividerColor: Colors.black12);
@@ -41,16 +42,33 @@ final lightTheme = ThemeData(
 class ThemeNotifier with ChangeNotifier {
   bool _isSunny = true;
 
+  SharedPreferences _prefs;
+  
+  void checkTheme() async {
+    _prefs = await SharedPreferences.getInstance();
+
+    print(_prefs.getBool("isLightTheme"));
+
+    _isSunny = _prefs.getBool("isLightTheme") == null
+      ?true
+      :_prefs.getBool("isLightTheme");
+
+    notifyListeners();
+  }
+
   ThemeNotifier() {
-    _isSunny = true;
+    checkTheme();
   }
 
   ThemeData get theme => _isSunny ? lightTheme : darkTheme;
 
   bool get sunny => _isSunny;
 
-  void toggleSunny() {
+  void toggleSunny() async {
     _isSunny = !_isSunny;
+
+    _prefs.setBool("isLightTheme", _isSunny);
+
     notifyListeners();
   }
 }

@@ -16,13 +16,14 @@ class FabData {
   Color color;
 }
 
-class _LightManagerState extends State<LightManager>
-    with SingleTickerProviderStateMixin {
+class _LightManagerState extends State<LightManager> with SingleTickerProviderStateMixin {
+
   AnimationController controller;
 
   @override
   void initState() {
     super.initState();
+
     controller = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
@@ -38,19 +39,25 @@ class _LightManagerState extends State<LightManager>
   FabData toggleData(theme) {
     FabData aux = FabData();
 
+    aux.color = Theme.of(context).buttonColor;
+
     if (theme) {
       aux.label = "Light ";
       aux.icon = FontAwesomeIcons.sun;
-      aux.color = Color(0xFF59F8E8);
 
       return aux;
     }
 
     aux.label = "Dark ";
     aux.icon = FontAwesomeIcons.moon;
-    aux.color = Color(0xFF03191E);
 
     return aux;
+  }
+
+  Future changeTheme(themeProvider) async {
+    themeProvider.toggleSunny();
+
+    controller.forward().whenComplete(() => controller.reverse());
   }
 
   @override
@@ -60,39 +67,43 @@ class _LightManagerState extends State<LightManager>
     var themeValues = toggleData(themeProvider.sunny);
 
     return GestureDetector(
-      onTap: () {
-        themeProvider.toggleSunny();
-        controller.reverse().whenComplete(() => controller.forward());
-      },
-      child: Stack(alignment: Alignment.center, children: <Widget>[
-        animatedLabel(themeValues),
-        Positioned(
-            right: 0,
-            child: Container(
+      onTap: () => changeTheme(themeProvider),
+      child: Stack(
+        alignment: Alignment.center, 
+        children: <Widget>[
+          animatedLabel(themeValues),
+          Positioned(
+              right: 0,
+              child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    border: Border.all(width: 3, color: Colors.white),
-                    color: Color(0xFF23272A),
-                    shape: BoxShape.circle),
-                child: FaIcon(themeValues.icon))),
+                  border: Border.all(width: 3, color: Theme.of(context).buttonColor),
+                  color: Theme.of(context).primaryColor,
+                  shape: BoxShape.circle),
+                  child: FaIcon(themeValues.icon)
+                  )
+          ),
       ]),
     );
   }
 
   Widget animatedLabel(themeValues) {
-    final animation =
-        Tween(begin: Offset(40, 0), end: Offset(0, 0)).animate(controller);
+    final animation = Tween(begin: Offset(0, 0), end: Offset(40, 0)).animate(controller);
 
-    return AnimatedBuilder(
-        animation: animation,
-        child: Container(
-          decoration: BoxDecoration(
+    final decoration  = BoxDecoration(
               color: themeValues.color,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
-                  bottomLeft: Radius.circular(20.0))),
-          padding: const EdgeInsets.fromLTRB(8, 7, 8, 7),
+                  bottomLeft: Radius.circular(20.0)
+              )
+    );
+
+    return AnimatedBuilder(
+        animation: animation,
+        child: Container(
+          decoration: decoration,
+          padding: const EdgeInsets.all(8),
           margin: const EdgeInsets.fromLTRB(8, 10, 45, 10),
           child: Text(themeValues.label),
         ),
