@@ -88,6 +88,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 32),
+                                  FlatButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AboutScreen()),
+                                          ),
+                                      child: Text("about")),
                                   if (!_useEmailSignIn)
                                     ..._buildGoogleSignInFields(),
                                   if (_errorMessage != null)
@@ -114,14 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
               )),
             ],
           )),
-      floatingActionButton: Row(children: [
-        FlatButton(
-            onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AboutScreen()),
-                ),
-            child: Text("about")),
-        LightManager()
-      ]),
+      floatingActionButton: LightManager(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }

@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 
 import 'models.dart' show CurrentUser, ThemeNotifier;
 import 'screens.dart' show HomeScreen, LoginScreen, NoteEditor, SettingsScreen;
-import 'styles.dart';
 
-void main() => runApp(ChangeNotifierProvider<ThemeNotifier>(
-    create: (ctxProvider) => ThemeNotifier(), child: SyncApp()));
+void main() => runApp(
+    ChangeNotifierProvider<ThemeNotifier>(
+      create: (ctxProvider) => ThemeNotifier(),
+      child: SyncApp()
+  ));
 
 class SyncApp extends StatelessWidget {
   @override
