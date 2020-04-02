@@ -57,7 +57,7 @@ class _LightManagerState extends State<LightManager> with SingleTickerProviderSt
   Future changeTheme(themeProvider) async {
     themeProvider.toggleSunny();
 
-    controller.forward().whenComplete(() => controller.reverse());
+    await controller.forward().whenComplete(() => controller.reverse());
   }
 
   @override

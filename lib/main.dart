@@ -1,10 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'models.dart' show CurrentUser, ThemeNotifier;
-import 'screens.dart' show HomeScreen, LoginScreen, NoteEditor, SettingsScreen;
+import 'models.dart' show ThemeNotifier;
+import 'screens.dart' show LoginScreen, SettingsScreen;
 
 void main() => runApp(
     ChangeNotifierProvider<ThemeNotifier>(
