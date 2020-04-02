@@ -67,7 +67,7 @@ class ThemeNotifier with ChangeNotifier {
   void toggleSunny() async {
     _isSunny = !_isSunny;
 
-    _prefs.setBool("isLightTheme", _isSunny);
+    await _prefs.setBool("isLightTheme", _isSunny);
 
     notifyListeners();
   }

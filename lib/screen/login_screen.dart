@@ -2,9 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:server_sync/model/user.dart';
 
 import 'package:server_sync/styles.dart';
 import 'package:server_sync/screens.dart';
@@ -24,9 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _loginForm = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _loggingIn = false;
-  String _errorMessage;
-  bool _useEmailSignIn = false;
+  //bool _loggingIn = false;
+  //String _errorMessage;
+  //bool _useEmailSignIn = false;
 
   @override
   void dispose() {
@@ -95,11 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 builder: (context) =>
                                                     AboutScreen()),
                                           ),
-                                      child: Text("about")),
-                                  if (!_useEmailSignIn)
-                                    ..._buildGoogleSignInFields(),
-                                  if (_errorMessage != null)
-                                    _buildLoginMessage(),
+                                      child: Text("about"))
                                 ],
                               ),
                             ),
@@ -127,6 +120,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+
+        /*
   List<Widget> _buildGoogleSignInFields() => [
         RaisedButton(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -148,7 +143,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: const CircularProgressIndicator(),
           ),
       ];
+          */
 
+/*
   List<Widget> _buildEmailSignInFields() => [
         TextFormField(
           controller: _emailController,
@@ -169,15 +166,16 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         const SizedBox(height: 16),
         _buildEmailSignInButton(),
-        if (_loggingIn) const LinearProgressIndicator(),
         FlatButton(
           child: Text('Use Google Sign In'),
           onPressed: () => setState(() {
-            _useEmailSignIn = false;
+            //_useEmailSignIn = false;
           }),
         ),
       ];
+      */
 
+/*
   Widget _buildEmailSignInButton() => RaisedButton(
         onPressed: _signInWithEmail,
         child: Container(
@@ -186,7 +184,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: const Text('Sign in / Sign up'),
         ),
       );
+      */
 
+/*
   Widget _buildLoginMessage() => Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.only(top: 18),
@@ -198,7 +198,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       );
+*/
 
+/*
   void _signInWithGoogle() async {
     _setLoggingIn();
     String errMsg;
@@ -220,7 +222,9 @@ class _LoginScreenState extends State<LoginScreen> {
       _setLoggingIn(false, errMsg);
     }
   }
+  */
 
+/*
   void _signInWithEmail() async {
     if (_loginForm.currentState?.validate() != true) return;
 
@@ -240,6 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _setLoggingIn(false, errMsg);
     }
   }
+  */
 
 /*
   Future<AuthResult> _doEmailSignIn(String email, String password,
@@ -257,14 +262,16 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       });
 */
+/*
   void _setLoggingIn([bool loggingIn = true, String errMsg]) {
     if (mounted) {
       setState(() {
-        _loggingIn = loggingIn;
-        _errorMessage = errMsg;
+        //_loggingIn = loggingIn;
+        //_errorMessage = errMsg;
       });
     }
   }
+  */
 
   onBottom(Widget child) => Positioned.fill(
         child: Align(
