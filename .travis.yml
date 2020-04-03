@@ -1,0 +1,17 @@
+os: linux
+distro: bionic
+
+before_script:
+  - git clone https://github.com/flutter/flutter.git -b beta
+  - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+  - flutter config --enable-web
+
+script:
+    - flutter build web
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: build/web
