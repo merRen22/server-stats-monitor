@@ -6,7 +6,6 @@ import 'package:server_sync/styles.dart';
 import 'package:server_sync/utils.dart';
 //import 'package:flt_keep/widgets.dart' show AppDrawer, NotesGrid, NotesList;
 
-/// Home screen, displays [Note] grid or list.
 class HomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
