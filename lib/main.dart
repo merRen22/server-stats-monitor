@@ -28,10 +28,11 @@ class SyncApp extends StatelessWidget {
   }
 
   Widget appValues(themeNotifier, user) => MaterialApp(
-      title: 'MC - Sync',
+      title: 'Server-Sync',
       debugShowCheckedModeBanner: false,
       theme: themeNotifier.theme,
-      home: user.isInitialValue
+      home: 
+      user.isInitialValue
           ? SessionSetUp()
           : user.data == null ? LoginScreen() : HomeScreen(),
       routes: {
