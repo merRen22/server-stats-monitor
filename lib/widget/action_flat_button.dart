@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:server_sync/model/themeNotifier.dart';
-
 
 class ActionFlatButton extends StatefulWidget {
   final String label;
