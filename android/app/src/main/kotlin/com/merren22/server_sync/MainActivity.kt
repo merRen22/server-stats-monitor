@@ -1,4 +1,4 @@
-package com.example.server_sync
+package com.merren22.server_sync
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

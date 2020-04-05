@@ -2,21 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final darkTheme = ThemeData(
-    primarySwatch: Colors.grey,
+    //primarySwatch: Colors.white,
     primaryColor: Colors.black,
-    brightness: Brightness.dark,
+    iconTheme: IconThemeData(
+      color: Colors.white
+    ),
     backgroundColor: const Color(0xFF23272A),
     buttonColor: const Color(0xFF7289DA),
-    accentColor: Colors.white,
-    accentIconTheme: IconThemeData(color: Colors.black),
-    dividerColor: Colors.black12);
+
+    accentColor: const Color(0xFF7289DA),
+  buttonTheme: ButtonThemeData(
+    shape: StadiumBorder(),
+    buttonColor: Colors.green,
+    textTheme: ButtonTextTheme.accent
+  ),
+    );
 
 final lightTheme = ThemeData(
-  primarySwatch: Colors.grey,
+  //primarySwatch: Colors.black,
   primaryColor: Colors.white,
-  brightness: Brightness.light,
+  iconTheme: IconThemeData(
+      color: Colors.black
+    ),
   backgroundColor: const Color(0xFF7289DA),
   buttonColor: const Color(0xFF59F8E8),
+
+  accentColor: const Color(0xFFda727e),
+  buttonTheme: ButtonThemeData(
+    shape: StadiumBorder(),
+    buttonColor: Colors.green,
+    textTheme: ButtonTextTheme.accent
+  ),
   /*
   buttonTheme: ButtonThemeData(
       colorScheme: ColorScheme(
@@ -34,9 +50,6 @@ final lightTheme = ThemeData(
           onError: null,
           brightness: null)),
           */
-  accentColor: Colors.black,
-  accentIconTheme: IconThemeData(color: Colors.white),
-  dividerColor: Colors.white54,
 );
 
 class ThemeNotifier with ChangeNotifier {
