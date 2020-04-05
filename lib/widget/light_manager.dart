@@ -16,8 +16,8 @@ class FabData {
   Color color;
 }
 
-class _LightManagerState extends State<LightManager> with SingleTickerProviderStateMixin {
-
+class _LightManagerState extends State<LightManager>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
 
   @override
@@ -68,47 +68,48 @@ class _LightManagerState extends State<LightManager> with SingleTickerProviderSt
 
     return GestureDetector(
       onTap: () => changeTheme(themeProvider),
-      child: Stack(
-        alignment: Alignment.center, 
-        children: <Widget>[
-          animatedLabel(themeValues),
-          Positioned(
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 3, color: Theme.of(context).buttonColor),
-                  color: Theme.of(context).primaryColor,
-                  shape: BoxShape.circle),
-                  child: FaIcon(themeValues.icon)
-                  )
+      child: Stack(alignment: Alignment.center, children: <Widget>[
+        animatedLabel(themeValues),
+        Positioned(
+          right: 0,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border:
+                    Border.all(width: 3, color: Theme.of(context).buttonColor),
+                color: Theme.of(context).primaryColor,
+                shape: BoxShape.circle),
+            child: FaIcon(themeValues.icon),
           ),
+        ),
       ]),
     );
   }
 
   Widget animatedLabel(themeValues) {
-    final animation = Tween(begin: Offset(0, 0), end: Offset(40, 0)).animate(controller);
+    final animation =
+        Tween(begin: Offset(0, 0), end: Offset(40, 0)).animate(controller);
 
-    final decoration  = BoxDecoration(
-              color: themeValues.color,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  bottomLeft: Radius.circular(20.0)
-              )
+    final decoration = BoxDecoration(
+      color: themeValues.color,
+      shape: BoxShape.rectangle,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20.0),
+        bottomLeft: Radius.circular(20.0),
+      ),
     );
 
     return AnimatedBuilder(
-        animation: animation,
-        child: Container(
-          decoration: decoration,
-          padding: const EdgeInsets.all(8),
-          margin: const EdgeInsets.fromLTRB(8, 10, 45, 10),
-          child: Text(themeValues.label),
-        ),
-        builder: (animatorContext, child) {
-          return Transform.translate(offset: animation.value, child: child);
-        });
+      animation: animation,
+      child: Container(
+        decoration: decoration,
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.fromLTRB(8, 10, 45, 10),
+        child: Text(themeValues.label),
+      ),
+      builder: (animatorContext, child) {
+        return Transform.translate(offset: animation.value, child: child);
+      },
+    );
   }
 }
