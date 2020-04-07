@@ -8,6 +8,11 @@ class AboutScreen extends StatefulWidget {
 class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
-    return Card(child: Container(child: Text("Hola")));
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+          child: Text("Page on work"),
+        ),
+    );
   }
 }

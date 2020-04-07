@@ -4,12 +4,9 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:server_sync/animation/sine_curve.dart';
-
-import 'package:server_sync/styles.dart';
-import 'package:server_sync/screens.dart';
 import 'package:server_sync/widgets.dart';
 
+import 'package:server_sync/utils.dart' show Application;
 import 'package:server_sync/animations.dart'
     show AnimatedWave, GradientBackGround;
 
@@ -28,11 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _loggingIn = false;
 
-  void goToAbout() => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => AboutScreen(),
-        ),
-      );
+  void goToAbout() => Application.router.navigateTo(context, '/about');
 
   @override
   void dispose() {
@@ -80,14 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
     //var userProvider = Provider.of<CurrentUser>(context);
 
     return Scaffold(
-      body: Theme(
-          data: ThemeData(primarySwatch: kAccentColorLight).copyWith(
-            buttonTheme: ButtonTheme.of(context).copyWith(
-              buttonColor: kAccentColorLight,
-              textTheme: ButtonTextTheme.primary,
-            ),
-          ),
-          child: Stack(
+      body: Stack(
             children: <Widget>[
               Positioned.fill(
                 child: GradientBackGround(
@@ -110,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             shape:
                                 RoundedRectangleBorder(side: BorderSide.none),
                             padding: const EdgeInsets.all(0),
-                            elevation: 0,
+                            elevation: 5,
                             color: Theme.of(context).accentColor,
                             onPressed: _signInWithGoogle,
                             child: Row(
@@ -152,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ],
-          )),
+          ),
       floatingActionButton: LightManager(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

@@ -6,26 +6,27 @@ class GradientBackGround extends StatelessWidget {
 
   GradientBackGround({this.content});
 
-  static final lightColor = Track("color1").add(
-    Duration(seconds: 3),
-    ColorTween(
-      begin: Color(0xff3c00ff),
-      end: Color(0xff7145FF),
-    ),
-  );
-
-  static final darkColor = Track("color2").add(
-    Duration(seconds: 3),
-    ColorTween(
-      begin: Color(0xff2700A3),
-      end: Color(0xff7145FF),
-    ),
-  );
-
-  final tween = MultiTrackTween([lightColor, darkColor]);
-
   @override
   Widget build(BuildContext context) {
+
+    final lightColor = Track("color1").add(
+      Duration(seconds: 3),
+      ColorTween(
+        begin: Theme.of(context).primaryColor.withOpacity(0.4),
+        end: Theme.of(context).primaryColor.withOpacity(0.7),
+      ),
+    );
+
+    final darkColor = Track("color2").add(
+      Duration(seconds: 3),
+      ColorTween(
+        begin: Theme.of(context).primaryColor.withOpacity(0.8),
+        end: Theme.of(context).primaryColor.withOpacity(0.3),
+      ),
+    );
+
+    final tween = MultiTrackTween([lightColor, darkColor]);
+
     return ControlledAnimation(
       playback: Playback.MIRROR,
       tween: tween,

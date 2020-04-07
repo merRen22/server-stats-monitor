@@ -1,70 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:server_sync/models.dart' show ThemeColor;
 import 'package:shared_preferences/shared_preferences.dart';
 
-final darkTheme = ThemeData(
-    //primarySwatch: Colors.white,
-    primaryColor: Colors.black,
-    iconTheme: IconThemeData(
-      color: Colors.white
-    ),
-    backgroundColor: const Color(0xFF23272A),
-    buttonColor: const Color(0xFF7289DA),
+themeMakerLight(color) {
+  
+  if(color == Colors.white){
+    return ThemeData.light();
+  }
 
-    accentColor: const Color(0xFF7289DA),
-  buttonTheme: ButtonThemeData(
-    shape: StadiumBorder(),
-    buttonColor: Colors.green,
-    textTheme: ButtonTextTheme.accent
-  ),
+  if(color == Colors.black){
+    return ThemeData.dark();
+  }
+
+  Color softColor = color[400];
+
+  Color mediumColor = color[600];
+
+  Color hardColor = color[800];
+
+  return ThemeData(
+      primarySwatch: color,
+      scaffoldBackgroundColor: softColor,
+      dialogBackgroundColor: softColor,
+      backgroundColor: softColor,
+      bottomAppBarColor: softColor,
+      bottomSheetTheme: BottomSheetThemeData(backgroundColor: softColor),
+      brightness: Brightness.light,
+      colorScheme: ColorScheme.light(
+        primary: color,
+        secondary: hardColor,
+      ),
+      cardTheme: CardTheme(color: mediumColor),
     );
+    }
 
-final lightTheme = ThemeData(
-  //primarySwatch: Colors.black,
-  primaryColor: Colors.white,
-  iconTheme: IconThemeData(
-      color: Colors.black
-    ),
-  backgroundColor: const Color(0xFF7289DA),
-  buttonColor: const Color(0xFF59F8E8),
-
-  accentColor: const Color(0xFFda727e),
-  buttonTheme: ButtonThemeData(
-    shape: StadiumBorder(),
-    buttonColor: Colors.green,
-    textTheme: ButtonTextTheme.accent
-  ),
-  /*
-  buttonTheme: ButtonThemeData(
-      colorScheme: ColorScheme(
-          primary: null,
-          primaryVariant: null,
-          secondary: null,
-          secondaryVariant: null,
-          surface: null,
-          background: null,
-          error: null,
-          onPrimary: null,
-          onSecondary: null,
-          onSurface: null,
-          onBackground: null,
-          onError: null,
-          brightness: null)),
-          */
-);
+  final appColors = [
+    ThemeColor(Colors.black,'black'),
+    ThemeColor(Colors.blue,'blue'),
+    ThemeColor(Colors.cyan,'cyan'),
+    ThemeColor(Colors.green,'green'),
+    ThemeColor(Colors.grey,'grey'),
+    ThemeColor(Colors.indigo,'indigo'),
+    ThemeColor(Colors.lime,'lime'),
+    ThemeColor(Colors.pink,'pink'),
+    ThemeColor(Colors.purple,'purple'),
+    ThemeColor(Colors.red,'red'),
+    ThemeColor(Colors.white,'white'),
+  ];
 
 class ThemeNotifier with ChangeNotifier {
-  bool _isSunny = true;
+  int _colorIndex = 0;
 
   SharedPreferences _prefs;
-  
+
   void checkTheme() async {
     _prefs = await SharedPreferences.getInstance();
 
-    print(_prefs.getBool("isLightTheme"));
+    print(_prefs.getInt("colorTheme"));
 
-    _isSunny = _prefs.getBool("isLightTheme") == null
-      ?true
-      :_prefs.getBool("isLightTheme");
+    _colorIndex = 
+    _prefs.getInt("colorTheme") == null
+        ? 0
+        : _prefs.getInt("colorTheme");
 
     notifyListeners();
   }
@@ -73,14 +70,16 @@ class ThemeNotifier with ChangeNotifier {
     checkTheme();
   }
 
-  ThemeData get theme => _isSunny ? lightTheme : darkTheme;
+  ThemeData get theme => themeMakerLight(
+    appColors[_colorIndex].color
+    );
 
-  bool get sunny => _isSunny;
+  ThemeColor get selectedThemeColor => appColors[_colorIndex];
 
-  void toggleSunny() async {
-    _isSunny = !_isSunny;
+  void toggleTheme(index) async {
+    _colorIndex = index;
 
-    await _prefs.setBool("isLightTheme", _isSunny);
+    await _prefs.setInt("colorTheme", _colorIndex);
 
     notifyListeners();
   }

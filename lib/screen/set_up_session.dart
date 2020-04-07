@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SessionSetUp extends StatefulWidget {
   SessionSetUp({Key key}) : super(key: key);
@@ -13,6 +15,7 @@ class _SessionSetUpState extends State<SessionSetUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.white,
         alignment: Alignment.center,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -30,7 +33,9 @@ class _SessionSetUpState extends State<SessionSetUp> {
             SkeletonAnimation(
               child: Container(
                 height: 40,
-                width: MediaQuery.of(context).size.width * 0.6,
+                width: kIsWeb
+                ?400
+                :MediaQuery.of(context).size.width * 0.6,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.grey[300]),

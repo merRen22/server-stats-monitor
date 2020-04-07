@@ -7,6 +7,7 @@ import 'package:server_sync/styles.dart';
 import 'package:server_sync/models.dart' show CurrentUser, Configuration;
 import 'package:server_sync/widgets.dart' show ConfigurationGrid, ConfigurationList;
 //import 'package:flt_keep/widgets.dart' show AppDrawer, NotesGrid, NotesList;
+import 'package:server_sync/utils.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -95,15 +96,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _fab(BuildContext context) => FloatingActionButton(
     child: const Icon(Icons.add),
-    onPressed: () {},
-  );
+    onPressed: () =>{});
 
   Widget _buildAvatar(BuildContext context) {
     final url = Provider.of<CurrentUser>(context)?.data?.photoUrl;
-    return CircleAvatar(
-      backgroundImage: url != null ? NetworkImage(url) : null,
-      child: url == null ? const Icon(Icons.face) : null,
-      radius: 17,
+
+    return GestureDetector(
+      onTap: () async {
+        final command = await Navigator.pushNamed(context, '/note');
+        //processNoteCommand(_scaffoldKey.currentState, command);
+      },
+      child: GestureDetector(
+        onTap: () => Application.router.navigateTo(context, "/user", 
+      //transition: transitionType
+      ),
+        child: CircleAvatar(
+          backgroundImage: url != null ? NetworkImage(url) : null,
+          child: url == null ? const Icon(Icons.face) : null,
+          radius: 17,
+        ),
+      ),
     );
   }
 
@@ -121,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildBlankView() => const SliverFillRemaining(
     hasScrollBody: false,
-    child: Text('Notes you add appear here',
+    child: Text('Work in progress',
       style: TextStyle(
         color: Colors.black54,
         fontSize: 14,
