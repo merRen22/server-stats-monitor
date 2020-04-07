@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:server_sync/animations.dart' show AnimatedWave;
 import 'package:server_sync/models.dart' show CurrentUser;
+import 'package:server_sync/widgets.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   UserDetailsScreen({Key key}) : super(key: key);
@@ -42,10 +44,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       );
 
   Widget infoCard(content) => Row(
+    mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Container(
-            width: MediaQuery.of(context).size.width * 2 / 3,
+            width: kIsWeb? 350 : MediaQuery.of(context).size.width * 2 / 3,
             child: Card(
               margin: EdgeInsets.all(0),
               shape: RoundedRectangleBorder(
@@ -167,66 +170,87 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     if(_firebaseUser == null){
       _loadingData = true;
     }
+    
+    final imageSize = kIsWeb?75: MediaQuery.of(context).size.width / 5;
 
-    final imageSize = MediaQuery.of(context).size.width / 5;
+    final cardWidth = kIsWeb? MediaQuery.of(context).size.width * 3/ 5: MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
       ),
-      body: Stack(
-        children: <Widget>[
-          _loadingData
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Card(
-                          margin: EdgeInsets.all(0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(15),
-                                bottomRight: Radius.circular(15)),
+      body: Container(
+        color: Colors.transparent,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: <Widget>[
+            _loadingData
+                ? Center(child: CircularProgressIndicator())
+                : Center(
+                  child: Container(
+        color: Colors.transparent,
+                    width: cardWidth,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Card(
+                                margin: EdgeInsets.all(0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(15),
+                                      bottomRight: Radius.circular(15)),
+                                ),
+                                elevation: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16, horizontal: 16),
+                                  child: CircleAvatar(
+                                    backgroundImage:
+                                        _firebaseUser.photoUrl != null ? NetworkImage(_firebaseUser.photoUrl) : null,
+                                    child:
+                                        _firebaseUser.photoUrl == null ? const Icon(Icons.face) : null,
+                                    radius: imageSize,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Text("Your theme"),
+                                    LightManager()
+                                  ]
+                                ),
+                              )
+                            ],
                           ),
-                          elevation: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 16),
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  _firebaseUser.photoUrl != null ? NetworkImage(_firebaseUser.photoUrl) : null,
-                              child:
-                                  _firebaseUser.photoUrl == null ? const Icon(Icons.face) : null,
-                              radius: imageSize,
-                            ),
+                          infoCard(
+                            [
+                              rowData(null, "Your data"),
+                              rowData(FontAwesomeIcons.userCircle,
+                                  _firebaseUser.displayName),
+                              rowData(FontAwesomeIcons.envelope, _firebaseUser.email)
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    infoCard(
-                      [
-                        rowData(null, "Your data"),
-                        rowData(FontAwesomeIcons.userCircle,
-                            _firebaseUser.displayName),
-                        rowData(FontAwesomeIcons.envelope, _firebaseUser.email)
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        dangerButton(FontAwesomeIcons.signOutAlt,
-                            () => logOut(), "log out"),
-                        dangerButton(FontAwesomeIcons.ban,
-                            () => deleteAccount(), "delete account"),
-                      ],
-                    ),
-                  ],
+                          Column(
+                            children: [
+                              dangerButton(FontAwesomeIcons.signOutAlt,
+                                  () => logOut(), "log out"),
+                              dangerButton(FontAwesomeIcons.ban,
+                                  () => deleteAccount(), "delete account"),
+                            ],
+                          ),
+                        ],
+                      ),
+                  ),
                 ),
-          onBottom(animatedWave)
-        ],
+            onBottom(animatedWave)
+          ],
+        ),
       ),
     );
   }

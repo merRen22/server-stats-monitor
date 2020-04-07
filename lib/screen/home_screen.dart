@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildBlankView() => const SliverFillRemaining(
     hasScrollBody: false,
-    child: Text('Notes you add appear here',
+    child: Text('Work in progress',
       style: TextStyle(
         color: Colors.black54,
         fontSize: 14,

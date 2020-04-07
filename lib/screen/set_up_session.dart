@@ -15,6 +15,7 @@ class _SessionSetUpState extends State<SessionSetUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.white,
         alignment: Alignment.center,
         child: Column(
           mainAxisSize: MainAxisSize.min,
