@@ -1,9 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-
-/// [Platform] is NOT supported on Web, make a workaround.
-bool get isNotIOS => kIsWeb || Platform.operatingSystem != 'ios';
-
-/// [Platform] is NOT supported on Web, make a workaround.
-bool get isNotAndroid => kIsWeb || Platform.operatingSystem != 'android';
+export 'utils/route_handlers.dart';
+export 'utils/routes.dart';
+export 'Utils/application.dart';
